@@ -1,11 +1,12 @@
-#include "main.h"
 #include <stdio.h>
 
 /**
- * print_sum_multiples - computes and prints the sum of all the multiples
+ * main - computes and prints the sum of all the multiples
  * of 3 or 5 below 1024
+ *
+ * Return: always 0
  */
-void print_sum_multiples(void)
+int main(void)
 {
 	int total = 0;
 	int i = 0;
@@ -19,4 +20,6 @@ void print_sum_multiples(void)
 	}
 
 	printf("%d\n", total);
+
+	return (0);
 }

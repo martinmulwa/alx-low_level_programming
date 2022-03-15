@@ -20,7 +20,7 @@ int main(void)
 	printf("%lu, ", fib1);
 	printf("%lu, ", fib2);
 
-	while (i < 50)
+	while (i < 49)
 	{
 		/* print next fib */
 		fib = fib1 + fib2;

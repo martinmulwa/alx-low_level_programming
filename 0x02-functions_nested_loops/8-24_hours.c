@@ -6,25 +6,24 @@
  */
 void jack_bauer(void)
 {
-	int i;
-	int n;
 	int hour;
 	int minute;
 
-	for (i = 0, n = 24 * 60; i < n; i++)
+	for (hour = 0; hour < 24; hour++)
 	{
-		/* print hour digits*/
-		hour = i / 60;
-		_putchar('0' + (hour / 10));
-		_putchar('0' + (hour % 10));
+		for (minute = 0; minute < 60; minute++)
+		{
+			/* print hour digits*/
+			_putchar('0' + (hour / 10));
+			_putchar('0' + (hour % 10));
 
-		_putchar(':');
+			_putchar(':');
 
-		/* print minute digits*/
-		minute = i % 60;
-		_putchar('0' + (minute / 10));
-		_putchar('0' + (minute % 10));
+			/* print minute digits*/
+			_putchar('0' + (minute / 10));
+			_putchar('0' + (minute % 10));
 
-		_putchar('\n');
+			_putchar('\n');
+		}
 	}
 }

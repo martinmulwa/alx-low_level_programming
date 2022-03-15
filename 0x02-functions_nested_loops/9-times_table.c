@@ -16,15 +16,19 @@ void times_table(void)
 			num = row * col;
 
 			/* print num */
-			if (num < 10)
+			if (num > 9)
+			{
+				_putchar('0' + (num / 10));
+				_putchar('0' + (num % 10));
+			}
+			else if (col > 0)
 			{
 				_putchar(' ');
 				_putchar('0' + num);
 			}
 			else
 			{
-				_putchar('0' + (num / 10));
-				_putchar('0' + (num % 10));
+				_putchar('0' + num);
 			}
 
 			/* print separator */

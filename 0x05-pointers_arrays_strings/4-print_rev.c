@@ -20,11 +20,17 @@ void print_rev(char *s)
  */
 void print_rev_rec(char *s)
 {
-	/* check if the current character is not NULL */
-	if (*s)
-		print_rev_rec(s + 1);
-	else
+	/* if the current character is NULL just return*/
+	if (*s == '\0')
+	{
 		return;
+	}
+
+	/* otherwise print the next characters in the string */
+	else
+	{
+		print_rev_rec(s + 1);
+	}
 
 	/* print the current character */
 	_putchar(*s);

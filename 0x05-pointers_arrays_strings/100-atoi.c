@@ -17,7 +17,7 @@ int _atoi(char *s)
 {
 	int count_dash = 0;
 	int found_num = 0;
-	int value = 0;
+	unsigned int value = 0;
 
 	while (*s)
 	{

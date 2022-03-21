@@ -1,5 +1,4 @@
 #include "main.h"
-#include <stdio.h>
 
 /**
 * _atoi - converts a string to an integer
@@ -12,7 +11,6 @@
 *
 * Return: integer in s if has a number. Otherwise 0
 */
-
 int _atoi(char *s)
 {
 	int count_dash = 0;
@@ -26,36 +24,25 @@ int _atoi(char *s)
 		{
 			/* break if the current character is not a digit */
 			if (*s < '0' || *s > '9')
-			{
 				break;
-			}
-
 			/* if the current number is a digit, add it to the value found */
 			else
-			{
 				value = (value * 10) + (*s - '0');
-			}
 		}
-
-		/* if you have not yet found a number */
 		else
 		{
-			/* check if the current character is a digit */
+			/* check if the current character is not a digit */
 			if (*s < '0' || *s > '9')
 			{
-				/* check if the current character is a dash */
 				if (*s == '-')
 					count_dash++;
 			}
-
-			/* if the current character is a digit, start keeping track */
 			else
 			{
 				value = (*s - '0');
 				found_num = 1;
 			}
 		}
-
 		s++;
 	}
 

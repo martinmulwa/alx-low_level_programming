@@ -61,7 +61,7 @@ int _atoi(char *s)
 
 	/* check if the found number is negative */
 	if (found_num && (count_dash % 2))
-		value *= -1;
+		value = -value;
 
 	return (value);
 }

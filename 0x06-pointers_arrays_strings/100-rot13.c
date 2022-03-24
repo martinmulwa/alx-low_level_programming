@@ -8,20 +8,16 @@
 */
 char *rot13(char *str)
 {
-	/* conversion tables */
-	char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	char values[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
-
 	int i;
 	int j;
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
-		for (j = 0; letters[j] != '\0'; j++)
+		for (j = 0; j < 26; j++)
 		{
-			if (str[i] == letters[j])
+			if ((str[i] - 65 == j) || (str[i] - 97 == j))
 			{
-				str[i] = values[j];
+				str[i] = (str[i] - j) + ((j + 13) % 26);
 				break;
 			}
 		}

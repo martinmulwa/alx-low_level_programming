@@ -1,7 +1,7 @@
 #include "main.h"
 #include <stdio.h>
 
-char *_strncpy(char *dest, char *src, int n);
+void copy_sub(char *dest, char *src, int n);
 void print_sub_hex(char *b, int n);
 void print_sub_str(char *str, int n);
 
@@ -22,7 +22,7 @@ void print_buffer(char *b, int size)
 
 		/* copy max 10 bytes from b to sub_b */
 		max_cpy = (size - i) >= 10 ? 10 : (size - i);
-		_strncpy(sub_b, (b + i), max_cpy);
+		copy_sub(sub_b, (b + i), max_cpy);
 
 		/* prints hex values of the characters in the specified order */
 		print_sub_hex(sub_b, max_cpy);
@@ -42,36 +42,19 @@ void print_buffer(char *b, int size)
 }
 
 /**
-* _strncpy - copies a string
+* copy_sub - copies a string
 * @dest: string to copy to
 * @src: string to copy from
 * @n: maximum number of characters to copy from src
-*
-* Description:
-* works exactly like strncpy from <string.h>
-*
-* Return: a pointer to the resulting string dest
 */
-char *_strncpy(char *dest, char *src, int n)
+void copy_sub(char *dest, char *src, int n)
 {
-	int i = 0;
-	char *new_dest = dest;
+	int i;
 
 	/* copy at most n characters to dest */
-	while (*src && (i < n))
-	{
-		*dest++ = *src++;
-		i++;
-	}
+	for (i = 0; i < n; i++)
+		dest[i] = src[i];
 
-	/* ensure than n bytes are written */
-	while (i < n)
-	{
-		*dest++ = '\0';
-		i++;
-	}
-
-	return (new_dest);
 }
 
 /**

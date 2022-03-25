@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 int _strlen(char *s);
+void rev_string(char *s);
 
 /**
 * infinite_add - adds two numbers given as strings
@@ -18,10 +19,8 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 	/* get the lengths of the strings */
 	int len_n1 = _strlen(n1);
 	int len_n2 = _strlen(n2);
-
-	int total = 0;
-	int rem = 0;
-	int i, j, k, l, tmp;
+	int total, rem = 0;
+	int i, j, k;
 
 	for (i = len_n1 - 1, j = len_n2 - 1, k = 0; i >= 0 || j >= 0; i--, j--, k++)
 	{
@@ -40,7 +39,6 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 		else
 			return (0);
 	}
-
 	/* add any remainders */
 	if (rem)
 	{
@@ -49,17 +47,10 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 		else
 			return (0);
 	}
-
-	/* reverse r */
-	for (l = 0; l < ((k + 1) / 2); l++)
-	{
-		tmp = r[l];
-		r[l] = r[k - l];
-		r[k - l] = tmp;
-	}
-
 	/* terminate r */
 	r[k + 1] = '\0';
+	/* reverse r*/
+	rev_string(r);
 
 	return (r);
 }
@@ -81,4 +72,28 @@ int _strlen(char *s)
 	}
 
 	return (length);
+}
+
+/**
+ * rev_string -  reverses a given string
+ * @s: address of first character in the string
+ */
+void rev_string(char *s)
+{
+	/* get the length of the string */
+	int length = _strlen(s);
+	int i;
+	int mir_i;
+	char tmp;
+
+	/* swap elements in mirror positions */
+	for (i = 0; i < (length / 2); i++)
+	{
+		/* find the corresponsing mirror index */
+		mir_i = length - (i + 1);
+
+		tmp = *(s + i);
+		*(s + i) = *(s + mir_i);
+		*(s + mir_i) = tmp;
+	}
 }

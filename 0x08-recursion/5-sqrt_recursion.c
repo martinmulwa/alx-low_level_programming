@@ -1,6 +1,6 @@
 #include "main.h"
 
-int sqrt_bisection(int n, int guess, int lower, int upper);
+int sqrt_linear(int n, int guess);
 
 /**
  * _sqrt_recursion - returns the natural square root of a number
@@ -11,32 +11,24 @@ int sqrt_bisection(int n, int guess, int lower, int upper);
  */
 int _sqrt_recursion(int n)
 {
-	int guess = n / 2;
-
-	return (sqrt_bisection(n, guess, 0, n));
+	return (sqrt_linear(n, 0));
 }
 
 /**
- * sqrt_bisection - calculates square root recursively using bisection search
+ * sqrt_linear - calculates square root recursively using linear search
  * @n: number whose square root to calculate
  * @guess: guess on the square root
- * @lower: lower boundary of search space
- * @upper: upper boundary of search space
  *
  * Return: natural square root of n. Otherwise -1 if it doesn't exist
  */
-int sqrt_bisection(int n, int guess, int lower, int upper)
+int sqrt_linear(int n, int guess)
 {
 	int square = guess * guess;
 
 	if (square == n)
 		return (guess);
-	else if (upper - lower <= 1)
+	else if (square > n)
 		return (-1);
-
-	/* generate new guess */
-	if (square < n)
-		return (sqrt_bisection(n, ((upper + lower) / 2), guess, upper));
 	else
-		return (sqrt_bisection(n, ((upper + lower) / 2), lower, guess));
+		return (sqrt_linear(n, guess + 1));
 }

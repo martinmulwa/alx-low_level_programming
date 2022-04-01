@@ -32,13 +32,6 @@ int main(int argc, char **argv)
 		return (1);
 	}
 
-	/* check if the argument is a valid integer */
-	if (!is_valid_int(argv[1]))
-	{
-		printf("Error\n");
-		return (1);
-	}
-
 	cents = atoi(argv[1]);
 
 	/* check if the number of cents is -ve */

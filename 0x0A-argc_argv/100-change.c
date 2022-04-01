@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int is_valid_int(char *s);
-
 /**
  * main - prints the minimum number of coins
  * to make change for an amount of money
@@ -52,23 +50,4 @@ int main(int argc, char **argv)
 	printf("%d\n", coins);
 
 	return (0);
-}
-
-/**
- * is_valid_int - checks if a string is a valid integer
- * @s: string
- *
- * Return: 1 is s is a valid integer. 0 otherwise
- */
-int is_valid_int(char *s)
-{
-	while (*s)
-	{
-		if (*s < '0' || *s > '9')
-			return (0);
-
-		s++;
-	}
-
-	return (1);
 }

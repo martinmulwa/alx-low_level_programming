@@ -15,7 +15,7 @@
  * - If ptr is NULL, then the call is equivalent to malloc(new_size),
  * for all values of old_size and new_size
  * - If new_size is equal to zero, and ptr is not NULL,
- then the call is equivalent to free(ptr)
+ * then the call is equivalent to free(ptr)
  *
  * Return: pointer to the newly allocated memory if successful. Otherwise NULL
  */
@@ -39,7 +39,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	/* allocate new space */
 	mem = malloc(new_size);
 	if (mem == NULL)
-		return (NULL);
+		return (ptr);
 
 	/* copy all the contents from ptr to the new memory */
 	for (i = 0; i < lim; i++)

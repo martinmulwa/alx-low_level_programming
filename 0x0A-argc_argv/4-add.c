@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int is_valid_int(char *s);
+int is_valid_int(char *str);
 
 /**
  * main - adds positive numbers
@@ -18,48 +18,45 @@ int is_valid_int(char *s);
 int main(int argc, char **argv)
 {
 	int i;
-	int total = 0;
+	unsigned int total = 0;
 
-	/* if no other arguments are passed */
-	if (argc < 2)
+	/* check correct usage */
+	if (argc <= 1)
 	{
-		printf("%d\n", 0);
+		printf("0\n");
 		return (0);
 	}
 
 	for (i = 1; i < argc; i++)
 	{
-		/* check if the argument is a valid integer */
-		if (is_valid_int(argv[i]))
-		{
-			total += atoi(argv[i]);
-		}
-		else
+		if (!is_valid_int(argv[i]))
 		{
 			printf("Error\n");
 			return (1);
 		}
+
+		total += atoi(argv[i]);
 	}
 
-	printf("%d\n", total);
+	printf("%u\n", total);
 
-	return (0);
+	return (1);
 }
 
 /**
- * is_valid_int - checks if a string is a valid integer
- * @s: string
+ * is_valid_int - checks if a given string is a valid integer
+ * @str: string to be checked
  *
- * Return: 1 is s is a valid integer. 0 otherwise
+ * Return: 1 if the given string is a valid integer. 0 otherwise.
  */
-int is_valid_int(char *s)
+int is_valid_int(char *str)
 {
-	while (*s)
-	{
-		if (*s < '0' || *s > '9')
-			return (0);
+	unsigned int i;
 
-		s++;
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
 	}
 
 	return (1);

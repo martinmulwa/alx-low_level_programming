@@ -17,13 +17,11 @@
  */
 int main(int argc, char **argv)
 {
-	int i;
-	int cents;
-	int new_coins;
+	int cents, new_coins, i;
+	int values[] = {25, 10, 5, 2, 1};
 	int coins = 0;
-	int coin_values[] = {25, 10, 5, 2, 1};
 
-	/* check for correct usage */
+	/* check correct usage */
 	if (argc != 2)
 	{
 		printf("Error\n");
@@ -31,20 +29,27 @@ int main(int argc, char **argv)
 	}
 
 	cents = atoi(argv[1]);
-
-	/* check if the number of cents is -ve */
 	if (cents < 0)
 	{
-		printf("%d\n", 0);
+		printf("0\n");
 		return (0);
 	}
 
-	for (i = 0; i < 5; i++)
+	/* find minimum number of coins */
+	while (cents > 0)
 	{
-		new_coins = cents / coin_values[i];
-		coins += new_coins;
+		for (i = 0; i < 5; i++)
+		{
+			if (cents >= values[i])
+			{
+				new_coins = cents / values[i];
+				coins = coins + new_coins;
+				cents = cents - (values[i] * new_coins);
+			}
 
-		cents -= (new_coins * coin_values[i]);
+			if (cents == 0)
+				break;
+		}
 	}
 
 	printf("%d\n", coins);

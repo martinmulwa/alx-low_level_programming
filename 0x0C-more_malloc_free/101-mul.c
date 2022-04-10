@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 {
 	char *num1, *num2, *result;
 	unsigned int len1, len2, len, i, j, k;
-	int dig1, dig2, dig, carry, tmp;
+	int dig1, dig2, dig, carry;
 
 	/* check correct usage */
 	if (!check_usage(argc, argv))
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 	/* allocate space for result */
 	result = create_str(len);
 	if (result == NULL)
-		error_exit();
+		return (1);
 	/* multiplication */
 	for (i = 1; i <= len1; i++)
 	{
@@ -53,14 +53,13 @@ int main(int argc, char **argv)
 			dig1 = num1[len1 - i] - '0';
 			dig2 = num2[len2 - j] - '0';
 			dig =  result[len - k] - '0';
-			tmp = (dig1 * dig2) + carry;
-			carry = tmp / 10;
-			result[len - k] = ((dig + (tmp % 10)) % 10) + '0';
-			carry += ((dig + (tmp % 10)) / 10);
-		}
-		result[len - k] = carry + '0';
-	}
 
+			carry += (dig1 * dig2) + dig;
+			result[len - k] = (carry % 10) + '0';
+			carry = carry / 10;
+		}
+		result[len - k] = ((result[len - k] - '0') + carry) + '0';
+	}
 	print_num(result);
 	free(result);
 	return (0);

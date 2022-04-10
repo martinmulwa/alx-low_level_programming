@@ -1,204 +1,99 @@
-#include "main.h"
 #include <stdlib.h>
-
-void print_str(char *str);
-void print_num(char *str);
-int is_valid_int(char *str);
-int check_usage(int argc, char **argv);
-void error_exit(void);
-unsigned int _strlen(char *s);
-char *create_str(unsigned int len);
+#include <stdio.h>
+#include "main.h"
 
 /**
- * main - multiplies two positive numbers
- * @argc: number of commandline arguments
- * @argv: array containing all commandline arguments
+ * is_digit - checks if a string contains a non-digit char
+ * @s: string to be evaluated
  *
- * Usage: mul num1 num2
- * - num1 and num2 will be passed in base 10
- * - Print the result, followed by a new line
- * - If the number of arguments is incorrect,
- * print Error, followed by a new line, and exit with a status of 98
- * - num1 and num2 should only be composed of digits.
- * If not, print Error, followed by a new line, and exit with a status of 98
- *
- * Return: 0 if successful. Otherwise 98
+ * Return: 0 if a non-digit is found, 1 otherwise
  */
-int main(int argc, char **argv)
+int is_digit(char *s)
 {
-	char *num1, *num2, *result;
-	unsigned int len1, len2, len, i, j, k;
-	int dig1, dig2, dig, carry;
+	int i = 0;
 
-	/* check correct usage */
-	if (!check_usage(argc, argv))
-		error_exit();
-
-	num1 = argv[1];
-	num2 = argv[2];
-	len1 = _strlen(num1);
-	len2 = _strlen(num2);
-	len = len1 + len2;
-	/* allocate space for result */
-	result = create_str(len);
-	if (result == NULL)
-		return (1);
-	/* multiplication */
-	for (i = 1; i <= len1; i++)
+	while (s[i])
 	{
-		carry = 0;
-		k = i;
-		for (j = 1; j <= len2; j++, k++)
-		{
-			dig1 = num1[len1 - i] - '0';
-			dig2 = num2[len2 - j] - '0';
-			dig =  result[len - k] - '0';
-
-			carry += (dig1 * dig2) + dig;
-			result[len - k] = (carry % 10) + '0';
-			carry = carry / 10;
-		}
-		result[len - k] = ((result[len - k] - '0') + carry) + '0';
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+		i++;
 	}
-	print_num(result);
-	free(result);
-	return (0);
+	return (1);
 }
 
 /**
- * error_exit - prints "Error" followed by a newline and exits with code 98
+ * _strlen - returns the length of a string
+ * @s: string to evaluate
+ *
+ * Return: the length of the string
  */
-void error_exit(void)
+int _strlen(char *s)
 {
-	print_str("Error");
+	int i = 0;
+
+	while (s[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
+
+/**
+ * errors - handles errors for main
+ */
+void errors(void)
+{
+	printf("Error\n");
 	exit(98);
 }
 
 /**
- * create_str - creates a string the given size and initializes it with 0s
- * @len: length of the string to create
+ * main - multiplies two positive numbers
+ * @argc: number of arguments
+ * @argv: array of arguments
  *
- * Return: pointer to created string if successful. Otherwise NULL
+ * Return: always 0 (Success)
  */
-char *create_str(unsigned int len)
+int main(int argc, char *argv[])
 {
-	char *result;
-	unsigned int i;
+	char *s1, *s2;
+	int len1, len2, len, i, carry, digit1, digit2, *result, a = 0;
 
-	/* allocate space for result */
-	result = malloc(sizeof(char) * (len + 1));
-	if (result == NULL)
-		return (NULL);
-
-	/* initialize result with zeroes */
-	for (i = 0; i < len; i++)
-		result[i] = '0';
-
-	result[len] = '\0';
-
-	return (result);
-}
-
-/**
- * print_str - prints a string using _putchar, followed a new line
- * @str: string to print
- */
-void print_str(char *str)
-{
-	unsigned int i;
-
-	if (str == NULL)
-		return;
-
-	for (i = 0; str[i] != '\0'; i++)
-		_putchar(str[i]);
-
-	_putchar('\n');
-}
-
-/**
- * print_num - prints a integer using _putchar, followed a new line
- * @str: string representing integer
- * skips initial 0s
- */
-void print_num(char *str)
-{
-	unsigned int i;
-	unsigned int len = _strlen(str);
-	int found_int = 0;
-
-	if (str == NULL)
-		return;
-
-	/* skip initial 0s */
+	s1 = argv[1], s2 = argv[2];
+	if (argc != 3 || !is_digit(s1) || !is_digit(s2))
+		errors();
+	len1 = _strlen(s1);
+	len2 = _strlen(s2);
+	len = len1 + len2 + 1;
+	result = malloc(sizeof(int) * len);
+	if (!result)
+		return (1);
+	for (i = 0; i <= len1 + len2; i++)
+		result[i] = 0;
+	for (len1 = len1 - 1; len1 >= 0; len1--)
+	{
+		digit1 = s1[len1] - '0';
+		carry = 0;
+		for (len2 = _strlen(s2) - 1; len2 >= 0; len2--)
+		{
+			digit2 = s2[len2] - '0';
+			carry += result[len1 + len2 + 1] + (digit1 * digit2);
+			result[len1 + len2 + 1] = carry % 10;
+			carry /= 10;
+		}
+		if (carry > 0)
+			result[len1 + len2 + 1] += carry;
+	}
 	for (i = 0; i < len - 1; i++)
 	{
-		if (!found_int && str[i] != '0')
-			found_int = 1;
-		if (found_int)
-			_putchar(str[i]);
+		if (result[i])
+			a = 1;
+		if (a)
+			_putchar(result[i] + '0');
 	}
-
-	/* print last character */
-	_putchar(str[i]);
-
+	if (!a)
+		_putchar('0');
 	_putchar('\n');
-}
-
-/**
- * is_valid_int - checks if given string is a valid integer
- * @str: string to be checked
- *
- * Return: 1 if str is a valid integer. 0 Otherwise.
- */
-int is_valid_int(char *str)
-{
-	while (*str)
-	{
-		if (*str < '0' || *str > '9')
-			return (0);
-
-		str++;
-	}
-
-	return (1);
-}
-
-/**
- * check_usage - checks correct usage for the program
- * @argc: number of commandline arguments
- * @argv: array of commandline arguments
- *
- * Return: 1 if correct usage. 0 Otherwise
- */
-int check_usage(int argc, char **argv)
-{
-	if (argc != 3)
-		return (0);
-
-	if (!is_valid_int(argv[1]) || !is_valid_int(argv[2]))
-		return (0);
-
-	return (1);
-}
-
-
-
-/**
- * _strlen - finds the length of a string
- * @s: address of first character in the string
- *
- * Return: length of the string
- */
-unsigned int _strlen(char *s)
-{
-	unsigned int length = 0;
-
-	while (*s)
-	{
-		length++;
-		s++;
-	}
-
-	return (length);
+	free(result);
+	return (0);
 }

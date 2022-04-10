@@ -153,9 +153,6 @@ void print_num(char *str)
  */
 int is_valid_int(char *str)
 {
-	if (*str == '\0')
-		return (0);
-
 	while (*str)
 	{
 		if (*str < '0' || *str > '9')
@@ -179,7 +176,7 @@ int check_usage(int argc, char **argv)
 	if (argc != 3)
 		return (0);
 
-	if (!(is_valid_int(argv[1]) && is_valid_int(argv[2])))
+	if (!is_valid_int(argv[1]) || !is_valid_int(argv[2]))
 		return (0);
 
 	return (1);

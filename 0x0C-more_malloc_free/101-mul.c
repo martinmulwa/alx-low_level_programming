@@ -1,6 +1,5 @@
 #include "main.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 void print_str(char *str);
 void print_num(char *str);
@@ -40,12 +39,10 @@ int main(int argc, char **argv)
 	len1 = _strlen(num1);
 	len2 = _strlen(num2);
 	len = len1 + len2;
-
 	/* allocate space for result */
 	result = create_str(len);
 	if (result == NULL)
 		error_exit();
-
 	/* multiplication */
 	for (i = 1; i <= len1; i++)
 	{
@@ -56,7 +53,6 @@ int main(int argc, char **argv)
 			dig1 = num1[len1 - i] - '0';
 			dig2 = num2[len2 - j] - '0';
 			dig =  result[len - k] - '0';
-
 			tmp = (dig1 * dig2) + carry;
 			carry = tmp / 10;
 			result[len - k] = ((dig + (tmp % 10)) % 10) + '0';
@@ -66,9 +62,7 @@ int main(int argc, char **argv)
 	}
 
 	print_num(result);
-
 	free(result);
-
 	return (0);
 }
 

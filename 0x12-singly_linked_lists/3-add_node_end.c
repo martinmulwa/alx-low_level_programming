@@ -1,37 +1,42 @@
 #include "lists.h"
 
 /**
- * add_node - adds a new node at the beginning of a list_t list
+ * add_node_end - adds a new node at the end of a list_t list
  * @head: pointer to the address of the first node
  * @str: the value of the str field of the new node
  *
  * Return: head of the new list. Otherwise NULL
  */
-list_t *add_node(list_t **head, const char *str)
+list_t *add_node_end(list_t **head, const char *str)
 {
-	list_t *new;
+	list_t *trav, *new;
 
 	if (head == NULL)
 		return (NULL);
 
-	/* allocate space for the new node */
+	trav = *head;
+
+	/* create the new node */
 	new = malloc(sizeof(list_t));
 	if (new == NULL)
 		return (NULL);
 
-	if (str == NULL)
+	new->str = (str == NULL) ? "(nil)" : strdup(str);
+	new->len = (str == NULL) ? 0 : _strlen(str);
+	new->next = NULL;
+
+	/* if the list has no elements */
+	if (trav == NULL)
 	{
-		new->str = strdup("(nil)");
-		new->len = 0;
-	}
-	else
-	{
-		new->str = strdup(str);
-		new->len = _strlen(str);
+		*head = new;
+		return (*head);
 	}
 
-	new->next = *head;
-	*head = new;
+	/* traverse to the end of the list */
+	while (trav->next != NULL)
+		trav = trav->next;
+
+	trav->next = new;
 
 	return (*head);
 }

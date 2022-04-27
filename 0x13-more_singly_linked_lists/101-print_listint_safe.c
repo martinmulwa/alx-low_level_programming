@@ -1,9 +1,5 @@
 #include "lists.h"
 
-listnode_t *add_nodeptr(listnode_t **head, const listint_t *ptr);
-void free_listnode(listnode_t *head);
-int is_in_nodes(listnode_t *head, const listint_t *ptr);
-
 /**
  * print_listint_safe - prints a listint_t linked list
  * @head: pointer to the first node in the list

@@ -48,7 +48,7 @@ int _cp(char *file_from, char *file_to)
 	/* read bytes from fd_r to fd_w*/
 	while ((count = read(fd_r, buf, 1024)) > 0)
 	{
-		if (fd_w == -1 || write(fd_w, buf, count) == -1)
+		if (fd_w == -1 || write(fd_w, buf, count) != count)
 		{
 			_close(fd_r);
 			dprintf(2, "Error: Can't write to %s\n", file_to);

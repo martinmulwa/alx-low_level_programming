@@ -44,16 +44,23 @@ int _cp(char *file_from, char *file_to)
 	}
 
 	fd_w = open(file_to, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (fd_w == -1)
-	{
-		_close(fd_r);
-		dprintf(2, "Error: Can't write to %s\n", file_to);
-		exit(99);
-	}
 
 	/* read bytes from fd_r to fd_w*/
-	while ((count = read(fd_r, buf, 1024)))
-		write(fd_w, buf, count);
+	while ((count = read(fd_r, buf, 1024)) > 0)
+	{
+		if (fd_w == -1 || write(fd_w, buf, count) == -1)
+		{
+			_close(fd_r);
+			dprintf(2, "Error: Can't write to %s\n", file_to);
+			exit(99);
+		}
+	}
+
+	if (count == -1)
+	{
+		dprintf(2, "Error: Can't read from file %s\n", file_from);
+		exit(98);
+	}
 
 	/* close the files */
 	_close(fd_r);

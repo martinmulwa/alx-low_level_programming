@@ -11,7 +11,7 @@ ssize_t read_textfile(const char *filename, size_t letters)
 {
 	int fd;
 	char *buf;
-	ssize_t count;
+	ssize_t rcount, wcount;
 
 	if (filename == NULL)
 		return (0);
@@ -30,25 +30,23 @@ ssize_t read_textfile(const char *filename, size_t letters)
 	}
 
 	/* read file */
-	count = read(fd, buf, letters);
-	if (count == -1)
+	rcount = read(fd, buf, letters);
+	if (rcount == -1)
 	{
 		free(buf);
 		close(fd);
 		return (0);
 	}
-
-	buf[count] = '\0';
+	buf[rcount] = '\0';
+	close(fd);
 
 	/* write to std_out */
-	count = write(STDOUT_FILENO, buf, count);
-	if (count == -1)
+	wcount = write(STDOUT_FILENO, buf, rcount);
+	if (wcount == -1)
 	{
 		free(buf);
-		close(fd);
 		return (0);
 	}
-
 	free(buf);
-	return (count);
+	return (wcount);
 }

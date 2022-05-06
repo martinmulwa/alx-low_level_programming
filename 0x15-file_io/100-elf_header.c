@@ -206,16 +206,26 @@ void print_class(Elf64_Ehdr elf_header)
 {
 	char *name = "Class";
 	unsigned int i, n, value = elf_header.e_ident[EI_CLASS];
-	char *options[] = {"Invalid", "ELF32", "ELF64"};
 
 	printf("  %s:", name);
 	for (i = 0, n = 35 - _strlen(name); i <= n; i++)
 		printf(" ");
 
-	if (value > 2)
-		printf("Unknown\n");
-	else
-		printf("%s\n", options[value]);
+	switch (value)
+	{
+		case ELFCLASSNONE:
+			printf("Invalid\n");
+			break;
+		case ELFCLASS32:
+			printf("ELF32\n");
+			break;
+		case ELFCLASS64:
+			printf("ELF64\n");
+			break;
+		default:
+			printf("Unknown\n");
+			break;
+	}
 }
 
 /**
@@ -226,16 +236,26 @@ void print_data(Elf64_Ehdr elf_header)
 {
 	char *name = "Data";
 	unsigned int i, n, value = elf_header.e_ident[EI_DATA];
-	char *options[] = {"Unknown", "little endian", "big endian"};
 
 	printf("  %s:", name);
 	for (i = 0, n = 35 - _strlen(name); i <= n; i++)
 		printf(" ");
 
-	if (value > 2 || value == 0)
-		printf("Unknown data format\n");
-	else
-		printf("2's complement, %s\n", options[value]);
+	switch (value)
+	{
+		case ELFDATANONE:
+			printf("Invalid data encoding\n");
+			break;
+		case ELFDATA2LSB:
+			printf("2's complement, little endian\n");
+			break;
+		case ELFDATA2MSB:
+			printf("2's complement, big endia\n");
+			break;
+		default:
+			printf("Unknown\n");
+			break;
+	}
 }
 
 /**
@@ -246,16 +266,23 @@ void print_version(Elf64_Ehdr elf_header)
 {
 	char *name = "Version";
 	unsigned int i, n, value = elf_header.e_ident[EI_VERSION];
-	char *options[] = {"0 (invalid)", "1 (current)"};
 
 	printf("  %s:", name);
 	for (i = 0, n = 35 - _strlen(name); i <= n; i++)
 		printf(" ");
 
-	if (value > 1)
-		printf("Unknown\n");
-	else
-		printf("%s\n", options[value]);
+	switch (value)
+	{
+		case EV_NONE:
+			printf("0 (invalid)\n");
+			break;
+		case EV_CURRENT:
+			printf("1 (current)\n");
+			break;
+		default:
+			printf("Unknown\n");
+			break;
+	}
 }
 
 /**
@@ -266,16 +293,32 @@ void print_osabi(Elf64_Ehdr elf_header)
 {
 	char *name = "OS/ABI";
 	unsigned int i, n, value = elf_header.e_ident[EI_OSABI];
-	char *options[] = {"UNIX - System V", "HP-UX", "NetBSD", "Linux"};
 
 	printf("  %s:", name);
 	for (i = 0, n = 35 - _strlen(name); i <= n; i++)
 		printf(" ");
 
-	if (value > 3)
-		printf("Unknown\n");
-	else
-		printf("%s\n", options[value]);
+	switch (value)
+	{
+		case ELFOSABI_SYSV:
+			printf("UNIX - System V\n");
+			break;
+		case ELFOSABI_HPUX:
+			printf("HP-UX\n");
+			break;
+		case ELFOSABI_NETBSD:
+			printf("UNIX - NetBSD\n");
+			break;
+		case ELFOSABI_LINUX:
+			printf("UNIX - Linux\n");
+			break;
+		case ELFOSABI_SOLARIS:
+			printf("UNIX - Solaris\n");
+			break;
+		default:
+			printf("<unknown: %u>\n", value);
+			break;
+	}
 }
 
 /**
@@ -303,18 +346,32 @@ void print_type(Elf64_Ehdr elf_header)
 {
 	char *name = "Type";
 	unsigned int i, n, value = elf_header.e_type;
-	char *options[] = {"NONE (No file type)", "REL (Relocatable file)",
-		"EXEC (Executable file)", "DYN (Shared object file)",
-		"CORE (Core file)"};
 
 	printf("  %s:", name);
 	for (i = 0, n = 35 - _strlen(name); i <= n; i++)
 		printf(" ");
 
-	if (value > 4)
-		printf("Unknown\n");
-	else
-		printf("%s\n", options[value]);
+	switch (value)
+	{
+		case ET_NONE:
+			printf("NONE (No file type)n");
+			break;
+		case ET_REL:
+			printf("REL (Relocatable file)\n");
+			break;
+		case ET_EXEC:
+			printf("EXEC (Executable file)\n");
+			break;
+		case ET_DYN:
+			printf("DYN (Shared object file)\n");
+			break;
+		case ET_CORE:
+			printf("CORE (Core file)\n");
+			break;
+		default:
+			printf("Unknown\n");
+			break;
+	}
 }
 
 /**
